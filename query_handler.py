@@ -1,12 +1,24 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 def load_data():
     try:
-        df = pd.read_csv('data/dark_store_data.csv')
+        df = pd.read_csv('data/BigBasketProducts.csv')
     except FileNotFoundError:
         return pd.DataFrame()
-    df['order_date'] = pd.to_datetime(df['order_date'], dayfirst=True, errors='coerce')
+
+    # Rename for compatibility
+    df.rename(columns={'product': 'product_name', 'sale_price': 'sales_amount'}, inplace=True)
+
+    # Simulate missing fields
+    np.random.seed(42)
+    df['units_sold'] = np.random.randint(10, 1000, size=len(df))
+    df['stock'] = df['units_sold'] + np.random.randint(50, 300, size=len(df))
+    df['order_date'] = pd.to_datetime(
+        pd.to_datetime('2023-01-01') + pd.to_timedelta(np.random.randint(0, 180, size=len(df)), unit='D')
+    )
+
     return df
 
 def show_inventory(product_name, df, month=None):
@@ -124,6 +136,6 @@ def show_product_sales_report(product_name, month_name, df):
         f"Sales Report for {product_name.title()} in {month_name.capitalize()}:\n"
         f"----------------------------------------\n"
         f"Total Units Sold: {total_units}\n"
-        f"Total Sales Amount: ${total_sales:.2f}\n"
+        f"Total Sales Amount: ₹{total_sales:.2f}\n"
         f"----------------------------------------"
     )

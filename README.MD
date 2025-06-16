@@ -25,24 +25,26 @@ Now enhanced with **interactive charts and visual analytics** using `Matplotlib`
 dark-store-analytics/
 │
 ├── data/
-│   └── dark_store_data.csv        # Your source dataset
+│   └── BigBasketProducts.csv       # Your source dataset
 │
-├── main.py                        # Application entry point
-├── query_handler.py               # Business logic for sales & inventory
-├── voice_input.py                 # Speech-to-text module
-└── README.md                      # Project documentation
+├── main.py                         # Application entry point
+├── query_handler.py                # Business logic for sales & inventory
+├── voice_input.py                  # Speech-to-text module
+└── README.md                       # Project documentation
+
 ```
 
 ---
 
 ## 🎤 Sample Queries You Can Ask
-
-| Intent                 | Example Query                                       |
-|-----------------------|-----------------------------------------------------|
-| Inventory (General)   | "Show me the inventory of Avocado"                  |
-| Inventory (Monthly)   | "What is the inventory of Milk in February?"        |
-| Sales Report (General)| "Show me the sales report for June"                 |
-| Sales Report (Product)| "Give me the sales report of Eggs for the month of May" |
+```
+| Intent                 | Example Query                                      |
+| ---------------------- | -------------------------------------------------- |
+| Inventory (General)    | "Show me the inventory of Garlic Oil"              |
+| Inventory (Monthly)    | "What is the inventory of Garlic Oil in February?" |
+| Sales Report (General) | "Show me the sales report for March"               |
+| Sales Report (Product) | "Give me the sales report of Garlic Oil in March"  |
+```
 
 ---
 
@@ -84,27 +86,36 @@ Then speak your query clearly when prompted. Example:
 
 ## 🧮 CSV Format Requirements
 
-Make sure your `dark_store_data.csv` includes at least the following columns:
+This app works with both clean retail CSVs or partial datasets (e.g., BigBasketProducts.csv).
 
-| Column         | Description                       |
-|----------------|-----------------------------------|
-| product_name   | Name of the product               |
-| order_date     | Date of stock entry/sale (dd/mm/yyyy) |
-| stock          | Quantity stocked in               |
-| units_sold     | Quantity sold                     |
-| sales_amount   | Revenue generated                 |
+If your file does not contain units_sold, stock, or order_date, they will be auto-generated for demonstration purposes.
+```
+| Required Columns               | Description         |
+| ------------------------------ | ------------------- |
+| `product_name` or `product`    | Name of the product |
+| `sales_amount` or `sale_price` | Revenue per product |
 
+
+Auto-generated fields:
+
+stock: Total quantity stocked
+
+units_sold: Quantity sold
+
+order_date: Simulated from a rolling 6-month window
+```
 ---
 
 ## 📈 Output Example
 
 ```
-Inventory Summary for Avocado in March:
+Inventory Summary for Garlic Oil in March:
 ----------------------------------------
-Total Stock Received: 250
-Total Units Sold: 160
-Net Inventory in Stock: 90
+Total Stock Received: 520
+Total Units Sold: 340
+Net Inventory in Stock: 180
 ----------------------------------------
+
 ```
 
 Chart Output:

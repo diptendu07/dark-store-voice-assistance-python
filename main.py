@@ -15,7 +15,6 @@ def main():
         product = None
         month = None
 
-        # Pattern: "inventory of X in Y"
         if " in " in query:
             parts = query.split(" in ")
             if len(parts) == 2:
@@ -24,7 +23,6 @@ def main():
                     product = product_part[1].strip()
                     month = parts[1].strip().lower()
         else:
-            # Pattern: "inventory of X"
             product = query.split("of")[-1].strip()
 
         if product:
@@ -39,7 +37,6 @@ def main():
         product = None
         month = None
 
-        # Pattern 1: "sales report of X for the month of Y"
         if " of " in query and " for the month of " in query:
             parts = query.split(" for the month of ")
             if len(parts) == 2:
@@ -49,7 +46,6 @@ def main():
                     product = product_part[1].strip()
                     product_specific = True
 
-        # Pattern 2: "sales report of X in Y"
         elif " of " in query and " in " in query:
             parts = query.split(" in ")
             if len(parts) == 2:
@@ -64,7 +60,6 @@ def main():
                 result = show_product_sales_report(product, month, df)
             else:
                 result = "Please specify both a valid product and month."
-
         else:
             for month in months:
                 if month in query:
